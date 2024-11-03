@@ -23,4 +23,12 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('roo
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
+//Lampu
+Route::get('/lampu', function () {
+    return view('pages.lampu');
+});
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+});
+
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
