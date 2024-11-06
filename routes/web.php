@@ -24,7 +24,7 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 //Lampu
-Route::get('/lampu', [App\Http\Controllers\LampuController::class, 'index'])->name('index')->middleware('auth');
+Route::get('/lampu', [App\Http\Controllers\LampuController::class, 'index'])->name('indexLamp')->middleware('auth');
 Route::get('/lampu/setel-waktu/{id}', [App\Http\Controllers\LampuController::class, 'editLamp'])->name('editLamp')->middleware('auth');
 Route::put('/lampu/setel-waktu/{id}', [App\Http\Controllers\LampuController::class, 'updateLamp'])->name('updateLamp')->middleware('auth');
 
