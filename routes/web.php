@@ -24,11 +24,11 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 //Lampu
-Route::get('/lampu', function () {
-    return view('pages.lampu');
-});
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-});
+Route::get('/lampu', [App\Http\Controllers\LampuController::class, 'index'])->name('index')->middleware('auth');
+Route::get('/lampu/setel-waktu/{id}', [App\Http\Controllers\LampuController::class, 'editLamp'])->name('editLamp')->middleware('auth');
+Route::put('/lampu/setel-waktu/{id}', [App\Http\Controllers\LampuController::class, 'updateLamp'])->name('updateLamp')->middleware('auth');
+
+//Dashboard
+Route::get('/dashboard', function () { return view('pages.dashboard'); })->middleware('auth');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
