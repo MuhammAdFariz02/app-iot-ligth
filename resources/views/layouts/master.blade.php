@@ -18,7 +18,7 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
         @include('layouts.topbar-iot')
-        @include('layouts.sidebar')
+        @include('layouts.sidebar-iot')
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
@@ -36,7 +36,7 @@
     </div>
     <!-- END layout-wrapper -->
 
-    @include('layouts.customizer')
+    {{-- @include('layouts.customizer') --}}
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
