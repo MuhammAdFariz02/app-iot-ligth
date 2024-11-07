@@ -15,7 +15,7 @@ class LampuController extends Controller
 
     public function editLamp($id){
         $lamp = Lamp::findOrFail($id);
-    return view('pages.setel-waktu', compact('lamp'));
+        return view('pages.setel-waktu', compact('lamp'));
     }
 
     public function updateLamp(Request $request, $id)
@@ -47,4 +47,47 @@ class LampuController extends Controller
         return redirect('/lampu')->with(['success' => 'Berhasil memperbarui waktu lampu']);
     }
 
+    // Fungsi untuk mengambil jadwal lampu (on_time dan off_time)
+    public function getLampSchedule(Request $request)
+    {
+        $lampNumber = $request->input('lamp_number');
+
+        // Cari data lampu berdasarkan lamp_number
+        $lamp = Lamp::where('lamp_number', $lampNumber)->first();
+
+        if ($lamp) {
+            return response()->json([
+                'on_time' => $lamp->on_time,
+                'off_time' => $lamp->off_time
+            ]);
+        } else {
+            return response()->json(['error' => 'Lamp not found'], 404);
+        }
+    }
+
+    // Fungsi untuk memperbarui status lampu
+    public function updateLampStatus(Request $request)
+    {
+        $lampNumber = $request->input('lamp_number');
+        $status = $request->input('status');
+
+        // Validasi input
+        if (!in_array($status, [0, 1])) {
+            return response()->json(['error' => 'Invalid status'], 400);
+        }
+
+        // Cari data lampu berdasarkan lamp_number
+        $lamp = Lamp::where('lamp_number', $lampNumber)->first();
+
+        if ($lamp) {
+            // Update status lampu
+            $lamp->status = $status;
+            $lamp->save();
+
+            return response()->json(['success' => 'Lamp status updated']);
+        } else {
+            return response()->json(['error' => 'Lamp not found'], 404);
+        }
+    }
+    
 }
