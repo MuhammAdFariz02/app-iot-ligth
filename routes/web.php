@@ -27,6 +27,8 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 Route::get('/lampu', [App\Http\Controllers\LampuController::class, 'index'])->name('indexLamp')->middleware('auth');
 Route::get('/lampu/setel-waktu/{id}', [App\Http\Controllers\LampuController::class, 'editLamp'])->name('editLamp')->middleware('auth');
 Route::put('/lampu/setel-waktu/{id}', [App\Http\Controllers\LampuController::class, 'updateLamp'])->name('updateLamp')->middleware('auth');
+Route::get('/get_lamp_schedule', [App\Http\Controllers\LampController::class, 'getLampSchedule'])->middleware('auth');
+Route::get('/update_lamp_status', [App\Http\Controllers\LampController::class, 'updateLampStatus'])->middleware('auth');
 
 //Dashboard
 Route::get('/dashboard', function () { return view('pages.dashboard'); })->middleware('auth');

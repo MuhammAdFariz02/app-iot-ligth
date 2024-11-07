@@ -13,12 +13,7 @@ class Lamp extends Model
     protected $table = 'lamps';
 
     // Tentukan atribut yang bisa diisi (mass assignable)
-    protected $fillable = [
-        'lamp_number', // Nomor lampu
-        'on_time',     // Waktu hidup
-        'off_time',    // Waktu mati
-        'status'       // Status lampu
-    ];
+    protected $fillable = ['status'];
 
-    // Jika ada relasi dengan model lain, bisa ditambahkan di sini
+    protected $casts = ['status' => 'boolean'];
 }
