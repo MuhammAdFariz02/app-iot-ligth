@@ -48,22 +48,29 @@ class LampuController extends Controller
     }
 
     // Fungsi untuk mengambil jadwal lampu (on_time dan off_time)
-    public function getLampSchedule(Request $request)
+    public function getLampScheduleData(Request $request)
     {
-        $lampNumber = $request->input('lamp_number');
+        $lamp = Lamp::all();
 
-        // Cari data lampu berdasarkan lamp_number
-        $lamp = Lamp::where('lamp_number', $lampNumber)->first();
-
-        if ($lamp) {
-            return response()->json([
-                'on_time' => $lamp->on_time,
-                'off_time' => $lamp->off_time
-            ]);
-        } else {
-            return response()->json(['error' => 'Lamp not found'], 404);
-        }
+        return response()->json($lamp);
     }
+
+    // public function getLampSchedule(Request $request)
+    // {
+    //     $lampNumber = $request->input('lamp_number');
+
+    //     // Cari data lampu berdasarkan lamp_number
+    //     $lamp = Lamp::where('lamp_number', $lampNumber)->first();
+
+    //     if ($lamp) {
+    //         return response()->json([
+    //             'on_time' => $lamp->on_time,
+    //             'off_time' => $lamp->off_time
+    //         ]);
+    //     } else {
+    //         return response()->json(['error' => 'Lamp not found'], 404);
+    //     }
+    // }
 
     // Fungsi untuk memperbarui status lampu
     public function updateLampStatus(Request $request)
