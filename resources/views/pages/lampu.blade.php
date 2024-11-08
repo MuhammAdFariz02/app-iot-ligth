@@ -24,12 +24,12 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="avatar-sm items-center">
-                                    <span class="avatar-title {{ $l->status ? 'bg-warning' : 'bg-dark-subtle' }} rounded fs-3">
+                                    <span class="avatar-title {{ $l->status ? 'bg-warning' : 'bg-dark-subtle' }} rounded fs-3" id="lamp-{{ $l->id }}">
                                         <i class="bx bx-bulb text-dark"></i>
                                     </span>
                                 </div>
                                 <div class="m-3">
-                                    <h4 class="fs-22 fw-semibold ff-secondary"><span>{{ $l->status ? 'Hidup' : 'Mati' }}</span></h4>
+                                    <h4 class="fs-22 fw-semibold ff-secondary"><span id="lamp-status-{{ $l->id }}">{{ $l->status ? 'Hidup' : 'Mati' }}</span></h4>
                                 </div>
                                 <div class="avatar-sm items-center">
                                     <span class="avatar-title bg-success-subtle rounded fs-3">
@@ -56,4 +56,45 @@
 <!-- dashboard init -->
 <script src="{{ URL::asset('build/js/pages/dashboard-ecommerce.init.js') }}"></script>
 <script src="{{ URL::asset('build/js/app.js') }}"></script>
+<script>
+    // Ambil CSRF token dari meta tag
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    setInterval(() => {
+        fetch(`{{ route('getLampData') }}`, {
+            method: 'GET', // Jika GET request, CSRF biasanya tidak perlu, tetapi jika POST maka diperlukan
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Access-Control-Allow-Origin': 'no-cors',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Memastikan data yang diterima ditampilkan ke console
+
+            document.getElementById('lamp-1').classList.remove('bg-dark-subtle');
+            document.getElementById('lamp-1').classList.add('bg-warning');
+
+            let i = 1;
+            data.forEach(lamp => {
+                if (!lamp.status) {
+                    document.getElementById(`lamp-${lamp.id}`).classList.add('bg-dark-subtle');
+                    document.getElementById(`lamp-${lamp.id}`).classList.remove('bg-warning');
+                    document.getElementById(`lamp-status-${lamp.id}`).textContent = lamp.status ? 'Hidup' : 'Mati';
+                } else {
+                    document.getElementById(`lamp-${lamp.id}`).classList.add('bg-warning');
+                    document.getElementById(`lamp-${lamp.id}`).classList.remove('bg-dark-subtle');
+                    document.getElementById(`lamp-status-${lamp.id}`).textContent = lamp.status ? 'Hidup' : 'Mati';
+                }
+
+                i++;
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error); // Menangkap dan menampilkan error
+        });
+    }, 1000);
+</script>
+
 @endsection
+

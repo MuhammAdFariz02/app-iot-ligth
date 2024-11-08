@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="col">ES
+    <div class="col">
         <div class="h-100">
             <div class="row">
                 <div class="col-12">
